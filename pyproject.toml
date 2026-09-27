@@ -1,0 +1,21 @@
+[build-system]
+requires = ["flit_core>=3.9,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "neuradix_manufacturing_erpnext"
+authors = [{name = "Busuttil Technologies Limited"}]
+description = "ERPNext companion foundation for Neuradix Manufacturing"
+requires-python = ">=3.10"
+dynamic = ["version"]
+dependencies = []
+
+[tool.bench.frappe-dependencies]
+frappe = ">=15.0.0,<16.0.0"
+erpnext = ">=15.0.0,<16.0.0"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
