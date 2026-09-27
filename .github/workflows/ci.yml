@@ -56,6 +56,8 @@ jobs:
           bench set-config -g redis_socketio redis://127.0.0.1:6379/2
           bench get-app --branch v15.87.2 --skip-assets erpnext https://github.com/frappe/erpnext.git
           bench get-app --skip-assets neuradix_manufacturing_erpnext "$GITHUB_WORKSPACE"
+          # This pinned Frappe release imports pkg_resources via Dropbox.
+          env/bin/python -m pip install setuptools==80.9.0
           bench new-site test.localhost --db-host 127.0.0.1 --db-root-password ci-root --admin-password ci-admin --mariadb-user-host-login-scope '%'
           bench --site test.localhost install-app erpnext
           bench --site test.localhost install-app neuradix_manufacturing_erpnext

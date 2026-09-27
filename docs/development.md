@@ -18,7 +18,9 @@ a Frappe test double. They do not prove real Frappe authentication, installation
 ## Disposable ERPNext integration site
 
 Initial pinned target: Frappe v15.98.0, ERPNext v15.87.2, Python 3.11, Node 18, MariaDB 10.6 and Redis 6.
-The CI integration job creates a fresh development site, installs ERPNext and this app, and runs:
+The CI integration job pins setuptools 80.9.0 inside the Bench environment because this Frappe
+release still imports `pkg_resources` through Dropbox. It creates a fresh development site,
+installs ERPNext and this app, and runs:
 
 ```bash
 bench --site test.localhost run-tests --app neuradix_manufacturing_erpnext
