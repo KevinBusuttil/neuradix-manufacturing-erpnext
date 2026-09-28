@@ -1,0 +1,99 @@
+{
+  "contract_version": "0.2.0-draft",
+  "generated_at": "2026-09-28T13:47:15.478867-04:00",
+  "schema": "neuradix.erpnext.work_order_detail.v1",
+  "site": {
+    "company": "NX Test Alpha Manufacturing Ltd",
+    "root_warehouse": "Plant A1 - NXA",
+    "site_id": "NXT-A1"
+  },
+  "source": {
+    "erp_time_zone": "America/New_York",
+    "instance": "test.localhost",
+    "system": "erpnext"
+  },
+  "work_order": {
+    "actual_end_at": null,
+    "actual_start_at": null,
+    "amended_from": null,
+    "bom_no": "BOM-NX-TEST-FG-01-001",
+    "company": "NX Test Alpha Manufacturing Ltd",
+    "erp_status": "Not Started",
+    "expected_delivery_date": null,
+    "has_batch_no": false,
+    "has_serial_no": false,
+    "lifecycle": "submitted",
+    "modified_at": "2026-09-28T13:47:11.374291-04:00",
+    "name": "MFG-WO-2026-00068",
+    "operations": [
+      {
+        "actual_end_at": null,
+        "actual_start_at": null,
+        "bom": "BOM-NX-TEST-FG-01-001",
+        "erp_status": "Pending",
+        "operation": "NX Test Blending",
+        "planned_end_at": null,
+        "planned_minutes": "271.875",
+        "planned_start_at": null,
+        "quantities": {
+          "completed": "0",
+          "process_loss": "0"
+        },
+        "row": 1,
+        "sequence_id": 1,
+        "status": "pending",
+        "workstation": "NX Test Blender",
+        "workstation_type": null
+      }
+    ],
+    "planned_end_at": "2026-09-28T18:19:03.567229-04:00",
+    "planned_start_at": "2026-09-28T13:47:11.067229-04:00",
+    "production_item": {
+      "item_code": "NX-TEST-FG-01",
+      "item_name": "NX Test Finished Blend"
+    },
+    "quantities": {
+      "disassembled": "0",
+      "material_transferred": "0",
+      "planned": "7.25",
+      "process_loss": "0",
+      "produced": "0"
+    },
+    "references": {
+      "material_request": null,
+      "production_plan": null,
+      "project": null,
+      "sales_order": null
+    },
+    "required_items": [
+      {
+        "allow_alternative_item": false,
+        "include_item_in_manufacturing": true,
+        "item_code": "NX-TEST-RM-01",
+        "item_name": "NX Test Base Powder",
+        "operation": "NX Test Blending",
+        "quantities": {
+          "consumed": "0",
+          "required": "16.3125",
+          "returned": "0",
+          "transferred": "0"
+        },
+        "row": 1,
+        "source_warehouse": "Stores - NXA",
+        "stock_uom": "Kg"
+      }
+    ],
+    "skip_transfer": false,
+    "status": "not_started",
+    "stock_uom": "Kg",
+    "transfer_material_against": "work_order",
+    "use_multi_level_bom": true,
+    "version": "2026-09-28 13:47:11.374291",
+    "warehouses": {
+      "fg": "Plant A1 FG - NXA",
+      "scrap": null,
+      "source": "Stores - NXA",
+      "wip": "Plant A1 WIP - NXA"
+    }
+  }
+}

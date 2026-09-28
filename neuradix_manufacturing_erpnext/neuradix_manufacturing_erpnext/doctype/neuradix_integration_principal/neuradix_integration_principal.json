@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "autoname": "field:user",
+ "creation": "2026-09-28 12:00:00.000000",
+ "description": "Binds a dedicated integration user to the Manufacturing sites it may read. Scope is resolved on the server from the authenticated user, never from request data.",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "enabled",
+  "column_break_sites",
+  "sites",
+  "section_break_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "description": "Dedicated service user holding only the Neuradix Integration Reader role.",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1,
+   "set_only_once": 1,
+   "unique": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_sites",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sites",
+   "fieldtype": "Table MultiSelect",
+   "label": "Allowed Manufacturing Sites",
+   "options": "Neuradix Integration Principal Site",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "links": [],
+ "modified": "2026-09-28 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neuradix Manufacturing ERPNext",
+ "name": "Neuradix Integration Principal",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,30 @@
+{
+  "bad_credentials": {
+    "exc_type": "AuthenticationError",
+    "http_status": 401
+  },
+  "generic_route_forbidden": {
+    "exc_type": "PermissionError",
+    "http_status": 403
+  },
+  "guest_forbidden": {
+    "exc_type": "PermissionError",
+    "http_status": 403
+  },
+  "invalid_page_size": {
+    "exc_type": "ValidationError",
+    "http_status": 417
+  },
+  "method_not_allowed": {
+    "exc_type": "PermissionError",
+    "http_status": 403
+  },
+  "order_not_found": {
+    "exc_type": "DoesNotExistError",
+    "http_status": 404
+  },
+  "site_forbidden": {
+    "exc_type": "PermissionError",
+    "http_status": 403
+  }
+}

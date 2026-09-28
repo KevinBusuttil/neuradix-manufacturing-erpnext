@@ -1,0 +1,179 @@
+{
+  "contract_version": "0.2.0-draft",
+  "generated_at": "2026-09-28T13:47:15.410796-04:00",
+  "items": [
+    {
+      "actual_end_at": null,
+      "actual_start_at": null,
+      "amended_from": null,
+      "bom_no": "BOM-NX-TEST-FG-01-001",
+      "company": "NX Test Alpha Manufacturing Ltd",
+      "erp_status": "Not Started",
+      "expected_delivery_date": null,
+      "lifecycle": "submitted",
+      "modified_at": "2026-09-28T13:47:11.374291-04:00",
+      "name": "MFG-WO-2026-00068",
+      "planned_end_at": "2026-09-28T18:19:03.567229-04:00",
+      "planned_start_at": "2026-09-28T13:47:11.067229-04:00",
+      "production_item": {
+        "item_code": "NX-TEST-FG-01",
+        "item_name": "NX Test Finished Blend"
+      },
+      "quantities": {
+        "disassembled": "0",
+        "material_transferred": "0",
+        "planned": "7.25",
+        "process_loss": "0",
+        "produced": "0"
+      },
+      "references": {
+        "material_request": null,
+        "production_plan": null,
+        "project": null,
+        "sales_order": null
+      },
+      "status": "not_started",
+      "stock_uom": "Kg",
+      "version": "2026-09-28 13:47:11.374291",
+      "warehouses": {
+        "fg": "Plant A1 FG - NXA",
+        "scrap": null,
+        "source": "Stores - NXA",
+        "wip": "Plant A1 WIP - NXA"
+      }
+    },
+    {
+      "actual_end_at": null,
+      "actual_start_at": null,
+      "amended_from": null,
+      "bom_no": "BOM-NX-TEST-FG-01-001",
+      "company": "NX Test Alpha Manufacturing Ltd",
+      "erp_status": "Not Started",
+      "expected_delivery_date": null,
+      "lifecycle": "submitted",
+      "modified_at": "2026-09-28T13:47:11.619418-04:00",
+      "name": "MFG-WO-2026-00069",
+      "planned_end_at": "2026-09-28T15:39:41.577496-04:00",
+      "planned_start_at": "2026-09-28T13:47:11.577496-04:00",
+      "production_item": {
+        "item_code": "NX-TEST-FG-01",
+        "item_name": "NX Test Finished Blend"
+      },
+      "quantities": {
+        "disassembled": "0",
+        "material_transferred": "0",
+        "planned": "3",
+        "process_loss": "0",
+        "produced": "0"
+      },
+      "references": {
+        "material_request": null,
+        "production_plan": null,
+        "project": null,
+        "sales_order": null
+      },
+      "status": "not_started",
+      "stock_uom": "Kg",
+      "version": "2026-09-28 13:47:11.619418",
+      "warehouses": {
+        "fg": "Plant A1 FG - NXA",
+        "scrap": null,
+        "source": "Stores - NXA",
+        "wip": null
+      }
+    },
+    {
+      "actual_end_at": null,
+      "actual_start_at": null,
+      "amended_from": null,
+      "bom_no": "BOM-NX-TEST-FG-01-001",
+      "company": "NX Test Alpha Manufacturing Ltd",
+      "erp_status": "Stopped",
+      "expected_delivery_date": null,
+      "lifecycle": "submitted",
+      "modified_at": "2026-09-28T13:47:11.800804-04:00",
+      "name": "MFG-WO-2026-00070",
+      "planned_end_at": "2026-09-29T14:47:11.685580-04:00",
+      "planned_start_at": "2026-09-28T13:47:11.685580-04:00",
+      "production_item": {
+        "item_code": "NX-TEST-FG-01",
+        "item_name": "NX Test Finished Blend"
+      },
+      "quantities": {
+        "disassembled": "0",
+        "material_transferred": "0",
+        "planned": "40",
+        "process_loss": "0",
+        "produced": "0"
+      },
+      "references": {
+        "material_request": null,
+        "production_plan": null,
+        "project": null,
+        "sales_order": null
+      },
+      "status": "stopped",
+      "stock_uom": "Kg",
+      "version": "2026-09-28 13:47:11.800804",
+      "warehouses": {
+        "fg": "Plant A1 FG - NXA",
+        "scrap": null,
+        "source": "Stores - NXA",
+        "wip": "Plant A1 WIP - NXA"
+      }
+    },
+    {
+      "actual_end_at": null,
+      "actual_start_at": null,
+      "amended_from": null,
+      "bom_no": "BOM-NX-TEST-FG-01-001",
+      "company": "NX Test Alpha Manufacturing Ltd",
+      "erp_status": "Cancelled",
+      "expected_delivery_date": null,
+      "lifecycle": "cancelled",
+      "modified_at": "2026-09-28T13:47:11.934335-04:00",
+      "name": "MFG-WO-2026-00071",
+      "planned_end_at": "2026-09-28T14:43:26.826237-04:00",
+      "planned_start_at": "2026-09-28T13:47:11.826237-04:00",
+      "production_item": {
+        "item_code": "NX-TEST-FG-01",
+        "item_name": "NX Test Finished Blend"
+      },
+      "quantities": {
+        "disassembled": "0",
+        "material_transferred": "0",
+        "planned": "1.5",
+        "process_loss": "0",
+        "produced": "0"
+      },
+      "references": {
+        "material_request": null,
+        "production_plan": null,
+        "project": null,
+        "sales_order": null
+      },
+      "status": "cancelled",
+      "stock_uom": "Kg",
+      "version": "2026-09-28 13:47:11.934335",
+      "warehouses": {
+        "fg": "Plant A1 FG - NXA",
+        "scrap": null,
+        "source": "Stores - NXA",
+        "wip": "Plant A1 WIP - NXA"
+      }
+    }
+  ],
+  "next_cursor": null,
+  "page_size": 200,
+  "schema": "neuradix.erpnext.work_order_page.v1",
+  "site": {
+    "company": "NX Test Alpha Manufacturing Ltd",
+    "root_warehouse": "Plant A1 - NXA",
+    "site_id": "NXT-A1"
+  },
+  "source": {
+    "erp_time_zone": "America/New_York",
+    "instance": "test.localhost",
+    "system": "erpnext"
+  }
+}

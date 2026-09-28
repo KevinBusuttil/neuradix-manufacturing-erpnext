@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "autoname": "field:site_id",
+ "creation": "2026-09-28 12:00:00.000000",
+ "description": "Maps one physical Neuradix Manufacturing site to one ERPNext Company and one warehouse subtree. This is not a Frappe site.",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "site_id",
+  "site_name",
+  "enabled",
+  "column_break_scope",
+  "company",
+  "root_warehouse",
+  "section_break_notes",
+  "description"
+ ],
+ "fields": [
+  {
+   "description": "Stable Manufacturing site identifier: uppercase letters, digits, hyphen or underscore.",
+   "fieldname": "site_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Site ID",
+   "length": 64,
+   "reqd": 1,
+   "set_only_once": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "site_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Site Name",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_scope",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "description": "Work Orders belong to this site when their Target (and any WIP) Warehouse is inside this subtree.",
+   "fieldname": "root_warehouse",
+   "fieldtype": "Link",
+   "label": "Root Warehouse",
+   "options": "Warehouse",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "links": [],
+ "modified": "2026-09-28 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Neuradix Manufacturing ERPNext",
+ "name": "Neuradix Manufacturing Site",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

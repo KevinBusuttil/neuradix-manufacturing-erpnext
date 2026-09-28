@@ -1,0 +1,672 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KevinBusuttil/neuradix-manufacturing-erpnext/contracts/neuradix.erpnext.work_order_detail.v1.schema.json",
+  "title": "Scoped ERPNext Work Order detail",
+  "description": "One Work Order with its own required-item and operation rows. Linked BOM, Item and Warehouse records are referenced by name only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "generated_at",
+    "schema",
+    "site",
+    "source",
+    "work_order"
+  ],
+  "properties": {
+    "schema": {
+      "const": "neuradix.erpnext.work_order_detail.v1"
+    },
+    "contract_version": {
+      "const": "0.2.0-draft"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "site": {
+      "$ref": "#/$defs/site"
+    },
+    "generated_at": {
+      "$ref": "#/$defs/erp_timestamp"
+    },
+    "work_order": {
+      "$ref": "#/$defs/work_order_detail"
+    }
+  },
+  "$defs": {
+    "decimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]{0,11})(\\.[0-9]{0,8}[1-9])?$",
+      "description": "Exact non-negative decimal from a DECIMAL(21,9) column, as a string."
+    },
+    "doc_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 140
+    },
+    "erp_date": {
+      "type": "string",
+      "format": "date",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "erp_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}[+-][0-9]{2}:[0-9]{2}$",
+      "description": "ERP wall-clock time with the ERP system time zone offset (not site time)."
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "company",
+        "root_warehouse",
+        "site_id"
+      ],
+      "properties": {
+        "site_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9][A-Z0-9_-]{0,63}$"
+        },
+        "company": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "root_warehouse": {
+          "$ref": "#/$defs/doc_name"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "erp_time_zone",
+        "instance",
+        "system"
+      ],
+      "properties": {
+        "system": {
+          "const": "erpnext"
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "erp_time_zone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}$",
+      "description": "Change token: the exact stored ERP modification value. Fixed width, so string order equals stored order; compare for equality and ordering only."
+    },
+    "work_order_detail": {
+      "type": "object",
+      "required": [
+        "actual_end_at",
+        "actual_start_at",
+        "amended_from",
+        "bom_no",
+        "company",
+        "erp_status",
+        "expected_delivery_date",
+        "has_batch_no",
+        "has_serial_no",
+        "lifecycle",
+        "modified_at",
+        "name",
+        "operations",
+        "planned_end_at",
+        "planned_start_at",
+        "production_item",
+        "quantities",
+        "references",
+        "required_items",
+        "skip_transfer",
+        "status",
+        "stock_uom",
+        "transfer_material_against",
+        "use_multi_level_bom",
+        "version",
+        "warehouses"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        },
+        "modified_at": {
+          "$ref": "#/$defs/erp_timestamp"
+        },
+        "lifecycle": {
+          "enum": [
+            "submitted",
+            "cancelled"
+          ]
+        },
+        "status": {
+          "enum": [
+            "submitted",
+            "not_started",
+            "in_process",
+            "completed",
+            "stopped",
+            "closed",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "erp_status": {
+          "type": "string",
+          "maxLength": 140
+        },
+        "company": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "production_item": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "item_code",
+            "item_name"
+          ],
+          "properties": {
+            "item_code": {
+              "$ref": "#/$defs/doc_name"
+            },
+            "item_name": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "bom_no": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "stock_uom": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quantities": {
+          "$ref": "#/$defs/work_order_quantities"
+        },
+        "warehouses": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fg",
+            "scrap",
+            "source",
+            "wip"
+          ],
+          "properties": {
+            "wip": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/doc_name"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "fg": {
+              "$ref": "#/$defs/doc_name"
+            },
+            "source": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/doc_name"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "scrap": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/doc_name"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "planned_start_at": {
+          "$ref": "#/$defs/erp_timestamp"
+        },
+        "planned_end_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_start_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_end_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_delivery_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "amended_from": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "references": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "material_request",
+            "production_plan",
+            "project",
+            "sales_order"
+          ],
+          "properties": {
+            "sales_order": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/doc_name"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "production_plan": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/doc_name"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "material_request": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/doc_name"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "project": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/doc_name"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        "use_multi_level_bom": {
+          "type": "boolean"
+        },
+        "skip_transfer": {
+          "type": "boolean"
+        },
+        "transfer_material_against": {
+          "anyOf": [
+            {
+              "enum": [
+                "work_order",
+                "job_card"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "has_serial_no": {
+          "type": "boolean"
+        },
+        "has_batch_no": {
+          "type": "boolean"
+        },
+        "required_items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/work_order_required_item"
+          }
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/work_order_operation"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "work_order_operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actual_end_at",
+        "actual_start_at",
+        "bom",
+        "erp_status",
+        "operation",
+        "planned_end_at",
+        "planned_minutes",
+        "planned_start_at",
+        "quantities",
+        "row",
+        "sequence_id",
+        "status",
+        "workstation",
+        "workstation_type"
+      ],
+      "properties": {
+        "row": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sequence_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "workstation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "workstation_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bom": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "work_in_progress",
+            "completed",
+            "unknown"
+          ]
+        },
+        "erp_status": {
+          "anyOf": [
+            {
+              "type": "string",
+              "maxLength": 140
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "quantities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "completed",
+            "process_loss"
+          ],
+          "properties": {
+            "completed": {
+              "$ref": "#/$defs/decimal"
+            },
+            "process_loss": {
+              "$ref": "#/$defs/decimal"
+            }
+          }
+        },
+        "planned_minutes": {
+          "$ref": "#/$defs/decimal"
+        },
+        "planned_start_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "planned_end_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_start_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actual_end_at": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/erp_timestamp"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "work_order_quantities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disassembled",
+        "material_transferred",
+        "planned",
+        "process_loss",
+        "produced"
+      ],
+      "properties": {
+        "planned": {
+          "$ref": "#/$defs/decimal"
+        },
+        "produced": {
+          "$ref": "#/$defs/decimal"
+        },
+        "material_transferred": {
+          "$ref": "#/$defs/decimal"
+        },
+        "process_loss": {
+          "$ref": "#/$defs/decimal"
+        },
+        "disassembled": {
+          "$ref": "#/$defs/decimal"
+        }
+      }
+    },
+    "work_order_required_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allow_alternative_item",
+        "include_item_in_manufacturing",
+        "item_code",
+        "item_name",
+        "operation",
+        "quantities",
+        "row",
+        "source_warehouse",
+        "stock_uom"
+      ],
+      "properties": {
+        "row": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "item_code": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "item_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_warehouse": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stock_uom": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/doc_name"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "include_item_in_manufacturing": {
+          "type": "boolean"
+        },
+        "allow_alternative_item": {
+          "type": "boolean"
+        },
+        "quantities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "consumed",
+            "required",
+            "returned",
+            "transferred"
+          ],
+          "properties": {
+            "required": {
+              "$ref": "#/$defs/decimal"
+            },
+            "transferred": {
+              "$ref": "#/$defs/decimal"
+            },
+            "consumed": {
+              "$ref": "#/$defs/decimal"
+            },
+            "returned": {
+              "$ref": "#/$defs/decimal"
+            }
+          }
+        }
+      }
+    }
+  }
+}

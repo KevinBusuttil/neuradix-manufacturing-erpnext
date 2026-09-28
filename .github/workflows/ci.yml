@@ -12,9 +12,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -e . build ruff==0.12.12
+      - run: python -m pip install -e . build ruff==0.12.12 jsonschema==4.25.1
       - run: python -m ruff check .
       - run: python -m ruff format --check .
+      - run: python tools/build_contract_schemas.py --check
       - run: python -m unittest discover -s tests -v
       - run: python -m build
   frappe-site:
@@ -56,13 +57,25 @@ jobs:
           bench set-config -g redis_socketio redis://127.0.0.1:6379/2
           bench get-app --branch v15.87.2 --skip-assets erpnext https://github.com/frappe/erpnext.git
           bench get-app --skip-assets neuradix_manufacturing_erpnext "$GITHUB_WORKSPACE"
+          # Test-only dependency declared in [tool.bench.dev-dependencies] (contract validation).
+          bench setup requirements --python --dev neuradix_manufacturing_erpnext
           # This pinned Frappe release imports pkg_resources via Dropbox.
           env/bin/python -m pip install setuptools==80.9.0
           bench new-site test.localhost --db-host 127.0.0.1 --db-root-password ci-root --admin-password ci-admin --mariadb-user-host-login-scope '%'
           bench --site test.localhost install-app erpnext
           bench --site test.localhost install-app neuradix_manufacturing_erpnext
           bench --site test.localhost set-config allow_tests true
-      - name: Real Frappe capability and guest-denial tests
+      - name: Real Frappe identity, permission, Work Order read and HTTP tests
+        env:
+          NEURADIX_CONTRACT_CAPTURE_DIR: ${{ runner.temp }}/contract-capture
         run: |
           cd "$RUNNER_TEMP/neuradix-bench"
           bench --site test.localhost run-tests --app neuradix_manufacturing_erpnext
+      - name: Keep observed contract responses for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: companion-contract-capture
+          path: ${{ runner.temp }}/contract-capture/
+          if-no-files-found: warn
+          retention-days: 14
