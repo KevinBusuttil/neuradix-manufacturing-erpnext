@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KevinBusuttil/neuradix-manufacturing-erpnext/contracts/neuradix.erpnext.work_order_deletion_page.v1.schema.json",
+  "title": "Scoped ERPNext Work Order deletion markers",
+  "description": "Best-effort deletion markers from Frappe's Deleted Document log. Periodic full reconciliation remains required.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "generated_at",
+    "items",
+    "next_cursor",
+    "page_size",
+    "schema",
+    "site",
+    "source"
+  ],
+  "properties": {
+    "schema": {
+      "const": "neuradix.erpnext.work_order_deletion_page.v1"
+    },
+    "contract_version": {
+      "const": "0.2.0-draft"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "site": {
+      "$ref": "#/$defs/site"
+    },
+    "generated_at": {
+      "$ref": "#/$defs/erp_timestamp"
+    },
+    "page_size": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 200
+    },
+    "items": {
+      "type": "array",
+      "maxItems": 200,
+      "items": {
+        "$ref": "#/$defs/work_order_deletion"
+      }
+    },
+    "next_cursor": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/cursor"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "doc_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 140
+    },
+    "erp_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}[+-][0-9]{2}:[0-9]{2}$",
+      "description": "ERP wall-clock time with the ERP system time zone offset (not site time)."
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "company",
+        "root_warehouse",
+        "site_id"
+      ],
+      "properties": {
+        "site_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9][A-Z0-9_-]{0,63}$"
+        },
+        "company": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "root_warehouse": {
+          "$ref": "#/$defs/doc_name"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "erp_time_zone",
+        "instance",
+        "system"
+      ],
+      "properties": {
+        "system": {
+          "const": "erpnext"
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "erp_time_zone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}$",
+      "description": "Change token: the exact stored ERP modification value. Fixed width, so string order equals stored order; compare for equality and ordering only."
+    },
+    "work_order_deletion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "deleted_at",
+        "last_lifecycle",
+        "last_version",
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "deleted_at": {
+          "$ref": "#/$defs/erp_timestamp"
+        },
+        "last_version": {
+          "$ref": "#/$defs/version"
+        },
+        "last_lifecycle": {
+          "enum": [
+            "submitted",
+            "cancelled"
+          ]
+        }
+      }
+    }
+  }
+}

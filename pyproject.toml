@@ -19,3 +19,8 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
+
+# Installed by `bench setup requirements --python --dev neuradix_manufacturing_erpnext`;
+# used by real-site tests to validate responses against the published contract schemas.
+[tool.bench.dev-dependencies]
+jsonschema = "==4.25.1"

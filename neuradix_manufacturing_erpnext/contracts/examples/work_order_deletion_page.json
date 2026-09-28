@@ -1,0 +1,25 @@
+{
+  "contract_version": "0.2.0-draft",
+  "generated_at": "2026-09-28T13:47:15.574827-04:00",
+  "items": [
+    {
+      "deleted_at": "2026-09-28T13:47:13.593572-04:00",
+      "last_lifecycle": "cancelled",
+      "last_version": "2026-09-28 13:47:13.404300",
+      "name": "MFG-WO-2026-00073"
+    }
+  ],
+  "next_cursor": null,
+  "page_size": 50,
+  "schema": "neuradix.erpnext.work_order_deletion_page.v1",
+  "site": {
+    "company": "NX Test Alpha Manufacturing Ltd",
+    "root_warehouse": "Plant A1 - NXA",
+    "site_id": "NXT-A1"
+  },
+  "source": {
+    "erp_time_zone": "America/New_York",
+    "instance": "test.localhost",
+    "system": "erpnext"
+  }
+}

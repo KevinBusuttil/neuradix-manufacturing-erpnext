@@ -1,0 +1,49 @@
+{
+  "contract_version": "0.2.0-draft",
+  "limits": {
+    "page_size_default": 50,
+    "page_size_max": 200
+  },
+  "maturity": "development",
+  "operations": {
+    "discover_command_outcome": false,
+    "maintenance_sync": false,
+    "post_production": false,
+    "post_stock": false,
+    "read_work_orders": true
+  },
+  "principal": {
+    "sites": [
+      {
+        "company": "NX Test Alpha Manufacturing Ltd",
+        "root_warehouse": "Plant A1 - NXA",
+        "site_id": "NXT-A1"
+      }
+    ],
+    "user": "nx-int-a1@example.test"
+  },
+  "read_contracts": {
+    "work_order_deletion_page": "neuradix.erpnext.work_order_deletion_page.v1",
+    "work_order_detail": "neuradix.erpnext.work_order_detail.v1",
+    "work_order_page": "neuradix.erpnext.work_order_page.v1"
+  },
+  "schema": "neuradix.erpnext.capabilities.v1",
+  "source": {
+    "erp_time_zone": "America/New_York",
+    "instance": "test.localhost",
+    "system": "erpnext"
+  },
+  "sync": {
+    "full_reconciliation_required": true,
+    "lifecycles": [
+      "submitted",
+      "cancelled"
+    ],
+    "order": [
+      "modified",
+      "name"
+    ],
+    "recommended_overlap_seconds": 3900
+  },
+  "target_erpnext_major": 15
+}

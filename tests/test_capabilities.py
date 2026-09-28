@@ -1,53 +1,33 @@
-"""Fast capability and authorization checks; these do not replace a real Frappe site test."""
+"""Fast capability checks. They do not replace the real Frappe site tests."""
 
-import importlib
-import sys
-import types
 import unittest
-from unittest.mock import patch
 
 from neuradix_manufacturing_erpnext.capabilities import describe_capabilities
 
+WRITE_OPERATIONS = ("post_stock", "post_production", "maintenance_sync", "discover_command_outcome")
+
 
 class CapabilityTests(unittest.TestCase):
-    def test_every_business_operation_is_unavailable(self):
+    def test_only_scoped_reads_are_available(self):
         result = describe_capabilities()
-        self.assertEqual(result["maturity"], "scaffold")
-        self.assertTrue(result["operations"])
-        self.assertFalse(any(result["operations"].values()))
+        self.assertEqual(result["maturity"], "development")
+        self.assertTrue(result["operations"]["read_work_orders"])
+        self.assertEqual(set(result["operations"]), {"read_work_orders", *WRITE_OPERATIONS})
+        self.assertFalse(any(result["operations"][name] for name in WRITE_OPERATIONS))
 
     def test_result_is_not_shared_mutable_state(self):
         result = describe_capabilities()
         result["operations"]["post_stock"] = True
-        self.assertFalse(describe_capabilities()["operations"]["post_stock"])
+        result["sync"]["order"].append("creation")
+        fresh = describe_capabilities()
+        self.assertFalse(fresh["operations"]["post_stock"])
+        self.assertEqual(fresh["sync"]["order"], ["modified", "name"])
 
-    def test_endpoint_requires_identity_and_role(self):
-        fake = types.ModuleType("frappe")
-        fake.session = types.SimpleNamespace(user="Guest")
-        fake.PermissionError = PermissionError
-        fake.whitelist = lambda **kwargs: lambda fn: fn
+    def test_full_reconciliation_is_always_declared(self):
+        sync = describe_capabilities()["sync"]
+        self.assertTrue(sync["full_reconciliation_required"])
+        self.assertGreaterEqual(sync["recommended_overlap_seconds"], 3600)
 
-        def throw(message, exception):
-            raise exception(message)
 
-        def only_for(role):
-            self.assertEqual(role, "System Manager")
-            if fake.session.user != "bootstrap-admin":
-                raise PermissionError("Missing role")
-
-        fake.throw = throw
-        fake.only_for = only_for
-        module = "neuradix_manufacturing_erpnext.api.v1"
-        with patch.dict(sys.modules, {"frappe": fake}):
-            sys.modules.pop(module, None)
-            api = importlib.import_module(module)
-            try:
-                with self.assertRaises(PermissionError):
-                    api.capabilities()
-                fake.session.user = "ordinary-user"
-                with self.assertRaises(PermissionError):
-                    api.capabilities()
-                fake.session.user = "bootstrap-admin"
-                self.assertEqual(api.capabilities()["maturity"], "scaffold")
-            finally:
-                sys.modules.pop(module, None)
+if __name__ == "__main__":
+    unittest.main()

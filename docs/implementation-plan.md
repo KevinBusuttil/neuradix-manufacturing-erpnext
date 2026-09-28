@@ -31,15 +31,25 @@ release. These gates are shared with Manufacturing, not additional elapsed phase
 EN-00 does not close M0, M1 or M2. Product work can proceed while Robotics Platform develops its
 required subset. Physical integration must pass M3/M5; mock ERP or robot fixtures do not qualify it.
 
-## First next increment: EN-01 scoped read API
+## EN-01 scoped read API (implemented, development maturity)
 
-1. Agree one named development ERPNext/Frappe pair and synthetic company/site fixtures.
-2. Define a least-privilege integration role and enforce server-side company/site access. Bind scope
-   to authenticated identity; payload fields cannot expand it. Include users who lack the role.
-3. Define stable Work Order DTOs, units, quantities, modified/version cursor and pagination.
-4. Implement authorized list/detail using ERPNext/Frappe permissions; include closed/cancelled and
-   changed BOM references. Do not add stock or document mutation shortcuts in the read increment.
-5. Add real Frappe site tests and matching Rust contract fixtures. Publish method/version changes.
+1. Development pair: Frappe v15.98.0 / ERPNext v15.87.2; synthetic fixtures with two Companies and
+   three Manufacturing sites. A Manufacturing site maps to one Company and one warehouse subtree and
+   is distinct from the Frappe site (ERP instance).
+2. Least-privilege `Neuradix Integration Reader` role (Work Order read only) plus a server-side
+   principal record; scope is bound to the authenticated user, and permission hooks confine the role
+   on Frappe's generic routes. Users who lack the role, extra roles and disabled records are refused.
+3. Versioned DTOs (contract 0.2.0-draft, JSON Schemas and observed examples), exact decimal strings,
+   ERP-zone timestamps, opaque versions and keyset cursors; see [API contract](api-contract.md).
+4. Authorized list/detail and deletion markers; closed, stopped, cancelled and amended orders and BOM
+   changes are covered. No stock or document mutation exists.
+5. Real Frappe site tests including HTTP token authentication; Manufacturing vendors the schemas and
+   observed examples and decodes them in its Rust consumer tests.
+
+Remaining for EN-01 acceptance: review of the site mapping and DTO by Manufacturing (MF-01/02),
+named customer ERP configuration inventory (M0), and CI evidence on the merged revision. The
+next companion increment is EN-02 (durable command receipt and outcome discovery), which depends on
+agreed ERP-neutral commands from Manufacturing.
 
 ## Posting and maintenance rules for later increments
 

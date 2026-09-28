@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KevinBusuttil/neuradix-manufacturing-erpnext/contracts/neuradix.erpnext.capabilities.v1.schema.json",
+  "title": "Companion capability profile",
+  "description": "Declared companion operations and read-contract identifiers.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "limits",
+    "maturity",
+    "operations",
+    "principal",
+    "read_contracts",
+    "schema",
+    "source",
+    "sync",
+    "target_erpnext_major"
+  ],
+  "properties": {
+    "schema": {
+      "const": "neuradix.erpnext.capabilities.v1"
+    },
+    "contract_version": {
+      "const": "0.2.0-draft"
+    },
+    "maturity": {
+      "enum": [
+        "development"
+      ]
+    },
+    "target_erpnext_major": {
+      "const": 15
+    },
+    "operations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "discover_command_outcome",
+        "maintenance_sync",
+        "post_production",
+        "post_stock",
+        "read_work_orders"
+      ],
+      "properties": {
+        "read_work_orders": {
+          "const": true
+        },
+        "post_stock": {
+          "const": false
+        },
+        "post_production": {
+          "const": false
+        },
+        "maintenance_sync": {
+          "const": false
+        },
+        "discover_command_outcome": {
+          "const": false
+        }
+      }
+    },
+    "read_contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work_order_deletion_page",
+        "work_order_detail",
+        "work_order_page"
+      ],
+      "properties": {
+        "work_order_page": {
+          "const": "neuradix.erpnext.work_order_page.v1"
+        },
+        "work_order_detail": {
+          "const": "neuradix.erpnext.work_order_detail.v1"
+        },
+        "work_order_deletion_page": {
+          "const": "neuradix.erpnext.work_order_deletion_page.v1"
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "page_size_default",
+        "page_size_max"
+      ],
+      "properties": {
+        "page_size_default": {
+          "const": 50
+        },
+        "page_size_max": {
+          "const": 200
+        }
+      }
+    },
+    "sync": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "full_reconciliation_required",
+        "lifecycles",
+        "order",
+        "recommended_overlap_seconds"
+      ],
+      "properties": {
+        "order": {
+          "const": [
+            "modified",
+            "name"
+          ]
+        },
+        "lifecycles": {
+          "const": [
+            "submitted",
+            "cancelled"
+          ]
+        },
+        "recommended_overlap_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "full_reconciliation_required": {
+          "const": true
+        }
+      }
+    },
+    "principal": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "sites",
+            "user"
+          ],
+          "properties": {
+            "user": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sites": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/site"
+              }
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    }
+  },
+  "$defs": {
+    "doc_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 140
+    },
+    "site": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "company",
+        "root_warehouse",
+        "site_id"
+      ],
+      "properties": {
+        "site_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9][A-Z0-9_-]{0,63}$"
+        },
+        "company": {
+          "$ref": "#/$defs/doc_name"
+        },
+        "root_warehouse": {
+          "$ref": "#/$defs/doc_name"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "erp_time_zone",
+        "instance",
+        "system"
+      ],
+      "properties": {
+        "system": {
+          "const": "erpnext"
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "erp_time_zone": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      }
+    }
+  }
+}
